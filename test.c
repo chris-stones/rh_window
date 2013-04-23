@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
 	}
 	case RH_INPUT_MOTIONNOTIFY:
 	{
-	  int x,y;
+	  int x=0,y=0;
 	  printf("RH_INPUT_MOTIONNOTIFY %d,%d\n",x,y);
 	  break;
 	}

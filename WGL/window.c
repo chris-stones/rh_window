@@ -84,28 +84,31 @@ static UINT ClassStyle() {
   return CS_OWNDC;
 }
 
-static ATOM ClassName() {
+static ATOM ClassName(rh_window_handle h) {
 
   WNDCLASSEX wndClass;
+  char classname[64];
 
   memset(&wndClass,0,sizeof wndClass);
+  sprintf(classname, "rh_classname %p", h);
 
   wndClass.cbSize = sizeof(WNDCLASSEX);
   wndClass.style  = ClassStyle();
   wndClass.lpfnWndProc = &DefWindowProc;
   wndClass.hInstance = Instance();
   wndClass.hCursor = LoadCursor(NULL/*Instance()*/,IDC_ARROW);
+  wndClass.lpszClassName = classname;
 
   return RegisterClassEx( &wndClass );
 }
 
 static void Init(rh_window_handle h) {
 
-  h->windowClass = ClassName();
+  h->windowClass = ClassName(h);
 
   h->hWnd = CreateWindowEx(
 		  ExStyle(),
-		  (LPCTSTR)((void*)(size_t)(h->windowClass)), // yeah, I know!
+		  (LPCTSTR)((void*)(size_t)(h->windowClass)), 
 		  TEXT("WIN32"),
 		  WindowStyle(),
 		  h->attr.x,h->attr.y,h->attr.w,h->attr.h,
@@ -145,6 +148,7 @@ int rh_window_destroy( rh_window_handle wnd )  {
           
     free(wnd);
   }
+  return 0;
 }
 
 int rh_window_attr_create(rh_window_attr_t * attr) {
@@ -164,6 +168,7 @@ int rh_window_attr_create(rh_window_attr_t * attr) {
 int rh_window_attr_destroy(rh_window_attr_t attr) {
   
   free(attr);
+  return 0;
 }
 
 

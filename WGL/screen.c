@@ -43,6 +43,7 @@ int rh_screen_destroy( rh_screen_handle scr ) {
     
     free(scr);
   }
+  return 0;
 }
 
 

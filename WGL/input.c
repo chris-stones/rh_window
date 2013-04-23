@@ -21,6 +21,7 @@ int rh_input_create( rh_input_handle *input, rh_window_handle wnd ) {
 int rh_input_destroy( rh_input_handle input ) {
   
   free( input );
+  return 0;
 }
 
 rh_input_data rh_input_get( rh_input_handle input ) {
