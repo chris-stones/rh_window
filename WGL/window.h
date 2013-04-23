@@ -36,6 +36,7 @@ struct _rh_window {
   
   HWND hWnd;
   ATOM windowClass;
+  HDC dc;
 };
 
 

@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "window.h"
 #include "screen.h"
@@ -241,7 +242,7 @@ int rh_window_attr_geti(const rh_window_attr_t attr, const char * property, int 
 
 int rh_window_swapbuffers( rh_window_handle wnd ) {
 
-  // TODO
+  SwapBuffers( wnd->dc );
 
   return 0;
 }

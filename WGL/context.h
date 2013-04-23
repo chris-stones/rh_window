@@ -6,9 +6,13 @@
 
 #include "../rh_window.h"
 
+#include<windows.h>
+
 struct _rh_render {
   
-  rh_screen_handle screen;
+  rh_window_handle window;
  
+  HDC dc;
+  HGLRC rc;
 };
 

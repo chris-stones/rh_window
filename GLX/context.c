@@ -62,17 +62,17 @@ int rh_render_destroy(rh_render_handle handle) {
   return 0;
 }
 
-int rh_render_create( rh_render_handle * _out, rh_screen_handle screen, int major_version, int minor_version, rh_render_handle shareCtx ) {
+int rh_render_create( rh_render_handle * _out, rh_window_handle window, int major_version, int minor_version, rh_render_handle shareCtx ) {
 
   rh_render_handle out = NULL;
   
   if((out = calloc(1, sizeof(struct _rh_render) ) )) {
   
-    Display * dpy = screen->display->dpy;
+    Display * dpy = window->screen->display->dpy;
     
-    GLXFBConfig framebufferConfig = screen->glxFBConfig[0]; // TODO: using first config for now.
+    GLXFBConfig framebufferConfig = window->screen->glxFBConfig[0]; // TODO: using first config for now.
     
-    out->screen = screen;
+    out->screen = window->screen;
     
     if(major_version > 2) {
 

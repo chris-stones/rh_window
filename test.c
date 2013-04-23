@@ -3,6 +3,9 @@
 
 #include "rh_window.h"
 
+#include<GL/gl.h>
+#include<math.h>
+
 
 int main(int argc, char **argv) {
     
@@ -18,12 +21,27 @@ int main(int argc, char **argv) {
   rh_display_create(&display);
   rh_screen_create_default(&screen, display);
   rh_window_create(&window, NULL, screen);
-  rh_render_create(&render,screen, 2,1,0);
+  rh_render_create(&render,window, 2,1,0);
   rh_bind_render_window(render, window);
   rh_input_create(&input, window);
   
+  glClearColor(1.0f,0.0f,1.0f,1.0f);
+  
+  float r = 0.0f;
+  float g = 0.0f;
+  float b = 0.0f;
+  
   while(!exitflag) {
   
+    glClear(GL_COLOR_BUFFER_BIT);
+    rh_window_swapbuffers(window);
+    
+    r += 3.0f/255.0f;
+    g += 4.0f/255.0f;
+    b += 5.0f/255.0f;
+    
+    glClearColor(sin(r)/2.0f+0.5f,sin(g)/2.0f+0.5f,sin(b)/2.0f+0.5f,1.0f);
+    
     if(( input_data = rh_input_get( input ) )) {
     
       switch( rh_input_gettype( input_data ) ) {

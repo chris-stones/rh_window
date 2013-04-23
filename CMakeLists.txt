@@ -8,9 +8,9 @@ add_subdirectory(GLX)
 add_subdirectory(EGL)
 add_subdirectory(WGL)
 
-add_executable(screen_interface main.c)
+add_executable(screen_interface test.c)
 
 install (FILES rh_window.h DESTINATION include)
 
-target_link_libraries (screen_interface rh_window_glx)
+target_link_libraries (screen_interface rh_window_glx m)
 

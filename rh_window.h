@@ -114,7 +114,7 @@ rh_input_event_enum_t rh_input_gettype( rh_input_data data );
 int rh_input_getpointer( rh_input_data data, rh_input_button_enum_t * button, int * x, int * y, int * pointer );
 int rh_input_getkey( rh_input_data data, rh_input_key_enum_t * key );
 
-int rh_render_create( rh_render_handle * render, rh_screen_handle screen, int major_version, int minor_version, rh_render_handle share );
+int rh_render_create( rh_render_handle * render, rh_window_handle window, int major_version, int minor_version, rh_render_handle share );
 int rh_render_destroy( rh_render_handle render);
 
 int rh_bind_render_window(rh_render_handle render, rh_window_handle window);
