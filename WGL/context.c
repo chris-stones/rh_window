@@ -36,9 +36,11 @@ int rh_render_create( rh_render_handle * _out, rh_window_handle window, int majo
   
   if((out = calloc(1, sizeof(struct _rh_render) ) )) {
   
+	PIXELFORMATDESCRIPTOR pfd;
+	int nPixelFormat;
+
     out->window = window;
-    
-    PIXELFORMATDESCRIPTOR pfd;
+   
     memset(&pfd, 0, sizeof pfd);
     pfd.nSize = sizeof pfd;
     pfd.nVersion = 1;
@@ -51,7 +53,7 @@ int rh_render_create( rh_render_handle * _out, rh_window_handle window, int majo
     out->dc = GetDC( window->hWnd );
     window->dc = out->dc;
 
-    int nPixelFormat = ChoosePixelFormat(out->dc, &pfd);
+    nPixelFormat = ChoosePixelFormat(out->dc, &pfd);
     SetPixelFormat(out->dc,nPixelFormat, &pfd);
 
     out->rc = wglCreateContext(out->dc);

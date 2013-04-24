@@ -1,4 +1,8 @@
 
+#ifdef WIN32
+	#include<Windows.h>
+#endif
+
 #include<stdio.h>
 
 #include "rh_window.h"
@@ -17,6 +21,10 @@ int main(int argc, char **argv) {
   rh_render_handle  render = 0;
   rh_input_handle   input = 0;
   rh_input_data     input_data = 0;
+
+  float r = 0.0f;
+  float g = 0.0f;
+  float b = 0.0f;
   
   rh_display_create(&display);
   rh_screen_create_default(&screen, display);
@@ -27,20 +35,16 @@ int main(int argc, char **argv) {
   
   glClearColor(1.0f,0.0f,1.0f,1.0f);
   
-  float r = 0.0f;
-  float g = 0.0f;
-  float b = 0.0f;
-  
   while(!exitflag) {
   
     glClear(GL_COLOR_BUFFER_BIT);
     rh_window_swapbuffers(window);
     
-    r += 3.0f/255.0f;
-    g += 4.0f/255.0f;
-    b += 5.0f/255.0f;
+    r += 1.0f/255.0f;
+    g += 2.0f/255.0f;
+    b += 3.0f/255.0f;
     
-    glClearColor(sin(r)/2.0f+0.5f,sin(g)/2.0f+0.5f,sin(b)/2.0f+0.5f,1.0f);
+    glClearColor(sinf(r)/2.0f+0.5f,sinf(g)/2.0f+0.5f,sinf(b)/2.0f+0.5f,1.0f);
     
     if(( input_data = rh_input_get( input ) )) {
     
