@@ -28,14 +28,6 @@ int rh_input_destroy( rh_input_handle input ) {
 
 rh_input_data rh_input_get( rh_input_handle input ) {
  
-  input->input_data.ident = ALooper_pollAll(0, NULL, &input->input_data.events , &input->input_data.source);
-  
-  if( input->input_data.ident >= 0) {
-    
-   
-    
-   return &input->input_data;  
-  }
   
   return NULL;
 }

@@ -59,31 +59,53 @@ rh_input_event_enum_t rh_input_gettype( rh_input_data data ) {
   return RH_INPUT_NONE;
 }
 
+static int _rh_input_getpointer_motion(rh_input_data data, rh_input_button_enum_t * b, int * x, int * y, int * p) {
+
+	if(b) *b = RH_INPUT_NOBUTTON;
+	if(p) *p = 0;
+	if(x) *x = data->xevent.xmotion.x;
+	if(y) *y = data->xevent.xmotion.y;
+	return 0;
+}
+
+static int _rh_input_getpointer_click(rh_input_data data, rh_input_button_enum_t * b, int * x, int * y, int * p) {
+
+	if( x ) *x = data->xevent.xbutton.x;
+	if( y ) *y = data->xevent.xbutton.y;
+	if( p ) *p = 0;
+
+	if( b ) {
+		switch( data->xevent.xbutton.button ) {
+		default:
+			*b = RH_INPUT_UNKNOWNBUTTON;
+			break;
+		case 1:
+			*b = RH_INPUT_LEFTBUTTON;
+			break;
+		case 2:
+			*b = RH_INPUT_MIDDLEBUTTON;
+			break;
+		case 3:
+			*b = RH_INPUT_RIGHTBUTTON;
+			break;
+		}
+	}
+	return 0;
+}
+
 int rh_input_getpointer( rh_input_data data, rh_input_button_enum_t * b, int * x, int * y, int * p ) {
   
   if( data ) {
-  
-    if( x ) *x = data->xevent.xbutton.x;
-    if( y ) *y = data->xevent.xbutton.y;
-    if( p ) *p = 0;
-    
-    if( b ) {
-      switch( data->xevent.xbutton.button ) {
-	default:
-	  *b = RH_INPUT_UNKNOWNBUTTON;
-	  break;
-	case 1:
-	  *b = RH_INPUT_LEFTBUTTON;
-	  break;
-	case 2:
-	  *b = RH_INPUT_MIDDLEBUTTON;
-	  break;
-	case 3:
-	  *b = RH_INPUT_RIGHTBUTTON;
-	  break;
-      }
-    }
-    return 0;
+
+	  switch(data->xevent.type) {
+		  default:
+			  break;
+		  case KeyPress:
+		  case KeyRelease:
+			  return _rh_input_getpointer_click();
+		  case MotionNotify:
+			  return _rh_input_getpointer_motion();
+	  }
   }
   
   if(b) *b = RH_INPUT_NOBUTTON;

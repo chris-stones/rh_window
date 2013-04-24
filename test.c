@@ -49,50 +49,51 @@ int main(int argc, char **argv) {
     if(( input_data = rh_input_get( input ) )) {
     
       switch( rh_input_gettype( input_data ) ) {
-	case RH_INPUT_NONE:
-	  printf("RH_INPUT_NONE\n");
-	  break;
-	case RH_INPUT_UNKNOWN:
-	  printf("RH_INPUT_UNKNOWN\n");
-	  break;
-	case RH_INPUT_KEYPRESS:
-	{
-	  rh_input_key_enum_t k;
-	  rh_input_getkey(input_data, &k);
-	  printf("RH_INPUT_KEYPRESS %d\n", k);
-	  break;
-	}
-	case RH_INPUT_KEYRELEASE:
-	{
-	  rh_input_key_enum_t k;
-	  rh_input_getkey(input_data, &k);
-	  printf("RH_INPUT_KEYRELEASE %d\n", k);
-	  if( k == RH_INPUT_KEY_ESCAPE)
-	    exitflag = 1;
-	  break;
-	}
-	case RH_INPUT_BUTTONPRESS:
-	{
-	  int x,y;
-	  rh_input_button_enum_t b;
-	  rh_input_getpointer(input_data, &b, &x, &y, NULL);
-	  printf("RH_INPUT_BUTTONPRESS %d %d,%d\n",b,x,y);
-	  break;
-	}
-	case RH_INPUT_BUTTONRELEASE:
-	{
-	  int x,y;
-	  rh_input_button_enum_t b;
-	  rh_input_getpointer(input_data, &b, &x, &y, NULL);
-	  printf("RH_INPUT_BUTTONRELEASE %d %d,%d\n",b,x,y);
-	  break;
-	}
-	case RH_INPUT_MOTIONNOTIFY:
-	{
-	  int x=0,y=0;
-	  printf("RH_INPUT_MOTIONNOTIFY %d,%d\n",x,y);
-	  break;
-	}
+		case RH_INPUT_NONE:
+		  printf("RH_INPUT_NONE\n");
+		  break;
+		case RH_INPUT_UNKNOWN:
+		  printf("RH_INPUT_UNKNOWN\n");
+		  break;
+		case RH_INPUT_KEYPRESS:
+		{
+		  rh_input_key_enum_t k;
+		  rh_input_getkey(input_data, &k);
+		  printf("RH_INPUT_KEYPRESS %d\n", k);
+		  break;
+		}
+		case RH_INPUT_KEYRELEASE:
+		{
+		  rh_input_key_enum_t k;
+		  rh_input_getkey(input_data, &k);
+		  printf("RH_INPUT_KEYRELEASE %d\n", k);
+		  if( k == RH_INPUT_KEY_ESCAPE)
+			exitflag = 1;
+		  break;
+		}
+		case RH_INPUT_BUTTONPRESS:
+		{
+		  int x,y;
+		  rh_input_button_enum_t b;
+		  rh_input_getpointer(input_data, &b, &x, &y, NULL);
+		  printf("RH_INPUT_BUTTONPRESS %d %d,%d\n",b,x,y);
+		  break;
+		}
+		case RH_INPUT_BUTTONRELEASE:
+		{
+		  int x,y;
+		  rh_input_button_enum_t b;
+		  rh_input_getpointer(input_data, &b, &x, &y, NULL);
+		  printf("RH_INPUT_BUTTONRELEASE %d %d,%d\n",b,x,y);
+		  break;
+		}
+		case RH_INPUT_MOTIONNOTIFY:
+		{
+		  int x,y;
+		  rh_input_getpointer(input_data, NULL, &x, &y, NULL);
+		  printf("RH_INPUT_MOTIONNOTIFY %d,%d\n",x,y);
+		  break;
+		}
       }
     }
   }

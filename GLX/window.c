@@ -14,7 +14,7 @@ static const struct _rh_window_attr _default_attr =
 { 
   0, 0, 
   800, 600, 
-  _RH_WINDOW_DECORATIONS | _RH_WINDOW_CURSOR | _RH_WINDOW_KEY_EVENTS | _RH_WINDOW_CLICK_EVENTS
+  _RH_WINDOW_DECORATIONS | _RH_WINDOW_CURSOR | _RH_WINDOW_KEY_EVENTS | _RH_WINDOW_CLICK_EVENTS | _RH_WINDOW_MOUSEMOVE_EVENTS
 };
 
 static void _set_attr( rh_window_handle h, const struct _rh_window_attr * attr ) {
@@ -229,14 +229,17 @@ static void Init(rh_window_handle h, int fullscreen, int borderless) {
   
   XSetWindowAttributes attribs;
   memset(&attribs,0,sizeof attribs);
-//		XSetSizeHints		 sizeHints;
 
-  if( 1 /* listenForEvents */ ) {
-	  h->xEventsMask =
-		  KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask;
-  }
-  else
-	  h->xEventsMask = NoEventMask;
+  h->xEventsMask = NoEventMask;
+
+  if( h->attr.flags & _RH_WINDOW_CLICK_EVENTS )
+	  h->xEventsMask |= ButtonPressMask | ButtonReleaseMask;
+
+  if( h->attr.flags & _RH_WINDOW_KEY_EVENTS )
+	  h->xEventsMask |= KeyPressMask | KeyReleaseMask;
+
+  if( h->attr.flags & _RH_WINDOW_MOUSEMOVE_EVENTS )
+	  h->xEventsMask |= PointerMotionMask;
 
   attribs.event_mask = h->xEventsMask;
   attribs.border_pixel = 0;
