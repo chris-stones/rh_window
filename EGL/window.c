@@ -28,6 +28,8 @@ int rh_window_attr_create(rh_window_attr_t * attr) {
   if(( out = calloc(1, sizeof(struct _rh_window_attr) ) )) {
     
     *out = _default_attr;
+    
+    *attr = out;
   }
   
   return -1;
@@ -49,6 +51,9 @@ static int _get_attr_mask(const char * property) {
 int rh_window_attr_seti(rh_window_attr_t attr, const char * property, int i) {
   
     int attr_mask;
+    
+    if(!attr)
+      return -1;
   
   if( strcmp( property, "x" ) == 0 ) 
     attr->x = i;
@@ -103,7 +108,11 @@ int rh_window_create( rh_window_handle * wnd, rh_window_attr_t attr, rh_screen_h
     
     out->screen = screen;
     
-    out->surface = eglCreateWindowSurface(screen->display->dpy, screen->config, screen->native_window , NULL);
+    out->surface = eglCreateWindowSurface(
+      screen->display->dpy, 
+      screen->config, 
+      (EGLNativeWindowType)(&screen->display->nativewindow),
+      NULL);
     
     *wnd = out;
     

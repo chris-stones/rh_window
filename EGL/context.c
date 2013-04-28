@@ -6,7 +6,7 @@
 
 #include<stdlib.h>
 
-int rh_render_create( rh_render_handle * render, rh_screen_handle screen, int major_version, int minor_version, rh_render_handle share ) {
+int rh_render_create( rh_render_handle * render, rh_window_handle window, int major_version, int minor_version, rh_render_handle share ) {
   
   rh_render_handle out = NULL;
   
@@ -14,9 +14,11 @@ int rh_render_create( rh_render_handle * render, rh_screen_handle screen, int ma
     
     const EGLint attrib_list[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
     
-    out->screen = screen;
+    out->screen = window->screen;
     
-    out->egl_ctx = eglCreateContext(display, screen->config, share ? share->egl_ctx : NULL, attrib_list);
+    out->egl_ctx = eglCreateContext(window->screen->display->dpy, window->screen->config, share ? share->egl_ctx : EGL_NO_CONTEXT, attrib_list);
+    
+    rh_bind_render_window(out,window);
     
     *render = out;
   }

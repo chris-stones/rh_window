@@ -34,7 +34,7 @@ static int _rh_screen_create( rh_screen_handle * scr, int screen_index, rh_displ
     
     out->display = display;
     
-    eglChooseConfig( display->dpy, _get_egl_attribs(), &out->config, 1 &numConfigs );
+    eglChooseConfig( display->dpy, _get_egl_attribs(), &out->config, 1, &numConfigs );
     
     eglGetConfigAttrib(display->dpy, out->config, EGL_NATIVE_VISUAL_ID, &out->format);
     

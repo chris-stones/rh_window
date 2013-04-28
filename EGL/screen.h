@@ -1,7 +1,9 @@
 
 #pragma once
 
-#include "../screen_interface.h"
+#include "../rh_window.h"
+
+#include<EGL/egl.h>
 
 struct _rh_screen {
   
@@ -9,7 +11,7 @@ struct _rh_screen {
   EGLint format;
   EGLConfig config;
   
-  EGLNativeWindowType native_window;
+//  EGLNativeWindowType native_window;
 };
 
 

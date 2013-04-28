@@ -7,7 +7,12 @@
 
 #include "rh_window.h"
 
-#include<GL/gl.h>
+#ifdef TARGET_GLES2
+  #include<GLES2/gl2.h>
+#else
+  #include<GL/gl.h>
+#endif
+
 #include<math.h>
 
 

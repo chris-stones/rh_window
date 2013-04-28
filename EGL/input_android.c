@@ -1,7 +1,5 @@
 
-#pragma once
 
-#include<android/looper.h>
 
 #include "input_android.h"
 
@@ -46,6 +44,16 @@ int rh_input_getkey( rh_input_data data, rh_input_key_enum_t * k ) {
   if(k)
     *k = RH_INPUT_KEY_NONE;
   
+  return -1;
+}
+
+rh_input_event_enum_t rh_input_gettype( rh_input_data data ) {
+   
+  return RH_INPUT_NONE;
+}
+
+int rh_input_getpointer( rh_input_data data, rh_input_button_enum_t * b, int * x, int * y, int * p ) {
+ 
   return -1;
 }
 

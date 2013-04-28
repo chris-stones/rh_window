@@ -2,9 +2,9 @@
 
 #include <stdlib.h>
 
-#include <android_native_app_glue.h>
+//#include <android_native_app_glue.h>
 
-#include "../screen_interface.h"
+#include "../rh_window.h"
 #include "window.h"
 #include "screen.h"
 #include "display.h"

@@ -100,11 +100,11 @@ int rh_input_getpointer( rh_input_data data, rh_input_button_enum_t * b, int * x
 	  switch(data->xevent.type) {
 		  default:
 			  break;
-		  case KeyPress:
-		  case KeyRelease:
-			  return _rh_input_getpointer_click();
+		  case ButtonPress:
+		  case ButtonRelease:
+			  return _rh_input_getpointer_click(data,b,x,y,p);
 		  case MotionNotify:
-			  return _rh_input_getpointer_motion();
+			  return _rh_input_getpointer_motion(data,b,x,y,p);
 	  }
   }
   

@@ -3,7 +3,7 @@
 
 #include <EGL/egl.h>
 
-#include "../screen_interface.h"
+#include "../rh_window.h"
 
 typedef enum {
   
