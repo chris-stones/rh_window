@@ -16,11 +16,11 @@ struct _rh_input_data;
 
 // User handles.
 typedef struct _rh_display * rh_display_handle;		// Connection to display. Typically one per application.
-typedef struct _rh_screen  * rh_screen_handle;		// Screen handle ( NOT a monitor! Think X11 ). Typically one per application.		
+typedef struct _rh_screen  * rh_screen_handle;		// Screen handle ( NOT a monitor! Think Session / X11 ). Typically one per application.		
 typedef struct _rh_window  * rh_window_handle;		// Window handle. One per window.
 typedef struct _rh_render  * rh_render_handle;		// Render context. Typically One per window.
 typedef struct _rh_window_attr * rh_window_attr_t;	// Optional. Window attributes.
-typedef struct _rh_input * rh_input_handle;			// Input handle. One per window.
+typedef struct _rh_input * rh_input_handle;		// Input handle. One per window.
 typedef struct _rh_input_data * rh_input_data;		// Input data container. keys / buttons / positions.
 
 // Input type. returned by rh_input_gettype();

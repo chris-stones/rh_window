@@ -2,6 +2,7 @@
 #include "screen.h"
 #include "display.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 
@@ -19,6 +20,7 @@ static const EGLint * _get_egl_attribs() {
 	  EGL_BLUE_SIZE, 	8,
 	  EGL_GREEN_SIZE, 	8,
 	  EGL_RED_SIZE, 	8,
+	  EGL_ALPHA_SIZE,	8, // Strange render bug on raspberry pi if this isnt requested!?
 	  EGL_NONE
   };
   return attribs;
@@ -35,6 +37,22 @@ static int _rh_screen_create( rh_screen_handle * scr, int screen_index, rh_displ
     out->display = display;
     
     eglChooseConfig( display->dpy, _get_egl_attribs(), &out->config, 1, &numConfigs );
+    
+    if(numConfigs > 0) {
+      EGLint bufSize,r,g,b,a,z,s = 0;
+
+      eglGetConfigAttrib(display->dpy,&out->config,EGL_BUFFER_SIZE,&bufSize);
+
+      eglGetConfigAttrib(display->dpy,out->config,EGL_RED_SIZE,&r);
+      eglGetConfigAttrib(display->dpy,out->config,EGL_GREEN_SIZE,&g);
+      eglGetConfigAttrib(display->dpy,out->config,EGL_BLUE_SIZE,&b);
+      eglGetConfigAttrib(display->dpy,out->config,EGL_ALPHA_SIZE,&a);
+
+      eglGetConfigAttrib(display->dpy,out->config,EGL_DEPTH_SIZE,&z);
+      eglGetConfigAttrib(display->dpy,out->config,EGL_STENCIL_SIZE,&s);
+
+      printf("%d Configs found:\n\tFrame buffer(%d) RGBA(%d %d %d %d)\n\tZBuffer(%d) Z(%d) S(%d)\n\n",numConfigs,bufSize,r,g,b,a,z+s,z,s);
+    }
     
     eglGetConfigAttrib(display->dpy, out->config, EGL_NATIVE_VISUAL_ID, &out->format);
     

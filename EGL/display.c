@@ -22,15 +22,15 @@ int rh_display_create( rh_display_handle * dpy ) {
     
     printf("graphics_get_display_size %dx%d\n", h->display_width, h->display_height);
     
-    
-    // You can hardcode the resolution here:
-//   display_width = 640;
-//   display_height = 480;
-
+   
    h->dst_rect.x = 0;
    h->dst_rect.y = 0;
    h->dst_rect.width = h->display_width;
    h->dst_rect.height = h->display_height;
+   
+    // You can hardcode the resolution here:
+   //h->display_width = 1024;
+   //h->display_height = 768;
 
    h->src_rect.x = 0;
    h->src_rect.y = 0;
