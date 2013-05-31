@@ -1,6 +1,4 @@
 
-
-
 #include "input_android.h"
 
 int rh_input_create( rh_input_handle *input, rh_window_handle wnd ) {

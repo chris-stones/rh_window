@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#ifdef RH_TARGET_ANDROID
+#ifdef RH_TARGET_OS_ANDROID
   struct ANativeWindow;
   typedef struct ANativeWindow ANativeWindow;
   int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width, int32_t height, int32_t format);
-#endif /*** RH_TARGET_ANDROID **/
+#endif /*** RH_TARGET_OS_ANDROID **/
 
 static const EGLint * _get_egl_attribs() {
 
@@ -20,7 +20,9 @@ static const EGLint * _get_egl_attribs() {
 	  EGL_BLUE_SIZE, 	8,
 	  EGL_GREEN_SIZE, 	8,
 	  EGL_RED_SIZE, 	8,
-	  EGL_ALPHA_SIZE,	8, // Strange render bug on raspberry pi if this isnt requested!?
+#ifdef RH_TARGET_OS_RASPBERRYPI
+	  EGL_ALPHA_SIZE,	8, // Needed on the raspbery-pi.
+#endif /*** RH_TARGET_OS_RASPBERRYPI ***/
 	  EGL_NONE
   };
   return attribs;
@@ -56,7 +58,12 @@ static int _rh_screen_create( rh_screen_handle * scr, int screen_index, rh_displ
     
     eglGetConfigAttrib(display->dpy, out->config, EGL_NATIVE_VISUAL_ID, &out->format);
     
+#ifdef RH_TARGET_OS_ANDROID
+    ANativeWindow_setBuffersGeometry((ANativeWindow*)(display->nativewindow), 0, 0, out->format);
+#endif
+    
     *scr = out;
+    return 0;
   }
   
   return -1;
@@ -67,40 +74,24 @@ static int _rh_screen_create_default( rh_screen_handle * scr, rh_display_handle 
   return _rh_screen_create(scr, 0, dpy);
 }
 
-int rh_screen_create( rh_screen_handle * scr, int screen_index, rh_display_handle dpy, ... ) {
+int rh_screen_create( rh_screen_handle * scr, int screen_index, rh_display_handle dpy ) {
   
   int e;
-  va_list va;
-  va_start(va,dpy);
-  
+
   if( (e = _rh_screen_create( scr, screen_index, dpy ) ) == 0) {
-    
-#ifdef RH_TARGET_ANDROID
-    (*scr)->android_window = va_arg(va, (struct ANativeWindow *) );
-    ANativeWindow_setBuffersGeometry((*scr)->native_window, 0, 0, (*scr)->format);
-#endif
+
   }
-   
-  va_end(va);
-  
+
   return e;
 }
 
-int rh_screen_create_default( rh_screen_handle * scr, rh_display_handle dpy, ... ) {
+int rh_screen_create_default( rh_screen_handle * scr, rh_display_handle dpy ) {
   
   int e;
-  va_list va;
-  va_start(va,dpy);
   
   if( (e = _rh_screen_create_default( scr, dpy ) ) == 0) {
     
-#ifdef RH_TARGET_ANDROID
-    (*scr)->android_window = va_arg(va, (struct ANativeWindow *) );
-    ANativeWindow_setBuffersGeometry((*scr)->android_window, 0, 0, format);
-#endif
   }
-   
-  va_end(va);
   
   return e;
 }

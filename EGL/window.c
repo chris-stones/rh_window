@@ -111,7 +111,7 @@ int rh_window_create( rh_window_handle * wnd, rh_window_attr_t attr, rh_screen_h
     out->surface = eglCreateWindowSurface(
       screen->display->dpy, 
       screen->config, 
-      (EGLNativeWindowType)(&screen->display->nativewindow),
+      screen->display->nativewindow,
       NULL);
     
     *wnd = out;

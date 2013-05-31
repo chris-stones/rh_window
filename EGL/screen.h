@@ -10,8 +10,6 @@ struct _rh_screen {
   rh_display_handle display;
   EGLint format;
   EGLConfig config;
-  
-//  EGLNativeWindowType native_window;
 };
 
 

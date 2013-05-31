@@ -1,10 +1,27 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <bcm_host.h>
+
+#ifdef RH_TARGET_OS_RASPBERRYPI
+  #include <bcm_host.h>
+#endif
 
 #include "display.h"
 
+#ifdef RH_TARGET_OS_ANDROID
+  struct ANativeWindow;
+  typedef struct ANativeWindow ANativeWindow;
+  int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width, int32_t height, int32_t format);
+  
+  static inline ANativeWindow * GetAndroidNativeWindow() {
+	 
+    /*** MEGGA HACK! ***/
+    
+    extern ANativeWindow * __rh_hack_get_android_native_window();
+    
+    return __rh_hack_get_android_native_window();
+  }
+#endif /*** RH_TARGET_OS_ANDROID **/
 
 int rh_display_create( rh_display_handle * dpy ) {
  
@@ -12,16 +29,15 @@ int rh_display_create( rh_display_handle * dpy ) {
   
   if(( h = calloc(1, sizeof(struct _rh_display)) )) {
     
+#ifdef RH_TARGET_OS_ANDROID
+    h->nativewindow = (EGLNativeWindowType)GetAndroidNativeWindow();
+#endif
+        
+#ifdef RH_TARGET_OS_RASPBERRYPI
     bcm_host_init();
     
     if( graphics_get_display_size(0 /* LCD */, &h->display_width, &h->display_height) < 0 )
-    {
-      printf("graphics_get_display_size failed!!!\n");
       return -1;
-    }
-    
-    printf("graphics_get_display_size %dx%d\n", h->display_width, h->display_height);
-    
    
    h->dst_rect.x = 0;
    h->dst_rect.y = 0;
@@ -45,10 +61,14 @@ int rh_display_create( rh_display_handle * dpy ) {
       &h->src_rect, DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 
       0/*clamp*/, 0/*transform*/);
 
-   h->nativewindow.element = h->dispman_element;
-   h->nativewindow.width = h->display_width;
-   h->nativewindow.height = h->display_height;
+   h->nativewindow_obj.element = h->dispman_element;
+   h->nativewindow_obj.width = h->display_width;
+   h->nativewindow_obj.height = h->display_height;
+   
+   h->nativewindow = (EGLNativeWindowType)(&h->nativewindow_obj);
+   
    vc_dispmanx_update_submit_sync( h->dispman_update );
+#endif /*** RH_TARGET_OS_RASPBERRYPI ***/
    
     if((h->dpy = eglGetDisplay(EGL_DEFAULT_DISPLAY)) == EGL_NO_DISPLAY ) {
      
@@ -81,8 +101,9 @@ int rh_display_destroy( rh_display_handle dpy ) {
    
     eglTerminate(dpy->dpy);
     free(dpy);
-    
+#ifdef RH_TARGET_OS_RASPBERRYPI
     bcm_host_deinit();
+#endif /*** RH_TARGET_OS_RASPBERRYPI ***/
   }
   
   return 0;
