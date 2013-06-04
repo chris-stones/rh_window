@@ -2,8 +2,6 @@
 
 #include <stdlib.h>
 
-//#include <android_native_app_glue.h>
-
 #include "../rh_window.h"
 #include "window.h"
 #include "screen.h"
@@ -15,14 +13,14 @@ extern "C" {
 
 struct _rh_input_data {
   
-  int ident;
-  int events;
-  void * source;
+  rh_input_event_enum_t event;
+  rh_input_button_enum_t btn;
+  int pointer;
+  float x; 
+  float y;
 };
 
 struct _rh_input {
-  
-  rh_window_handle window;
   
   struct _rh_input_data input_data;
 };

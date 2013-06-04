@@ -26,8 +26,8 @@ typedef struct _rh_input_data * rh_input_data;		// Input data container. keys / 
 // Input type. returned by rh_input_gettype();
 typedef enum {
   
-  RH_INPUT_NONE,			// No events.
-  RH_INPUT_UNKNOWN,			// Unknown Event.
+  RH_INPUT_NONE,		// No events.
+  RH_INPUT_UNKNOWN,		// Unknown Event.
   RH_INPUT_KEYPRESS,		// Keyboard Key Pressed.
   RH_INPUT_KEYRELEASE,		// Keyboard Key Released.
   RH_INPUT_BUTTONPRESS,		// Mouse Button Pressed.
@@ -151,6 +151,9 @@ int rh_input_getpointer( rh_input_data data, rh_input_button_enum_t * button, in
 
 // IF the input involved the keyboard, you can query qhich key here.
 int rh_input_getkey( rh_input_data data, rh_input_key_enum_t * key );
+
+// manually add pointer events - android kludge.
+void rh_input_despatch_pointer_event(rh_input_event_enum_t event, rh_input_button_enum_t btn, int pointer, float x, float y);
 
 /***
 * Create / Destroy a rendering context.
