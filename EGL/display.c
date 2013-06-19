@@ -11,8 +11,7 @@
 #ifdef RH_TARGET_OS_ANDROID
   struct ANativeWindow;
   typedef struct ANativeWindow ANativeWindow;
-  int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window, int32_t width, int32_t height, int32_t format);
-  
+
   static inline ANativeWindow * GetAndroidNativeWindow() {
 	 
     /*** MEGGA HACK! ***/
@@ -72,21 +71,21 @@ int rh_display_create( rh_display_handle * dpy ) {
    
     if((h->dpy = eglGetDisplay(EGL_DEFAULT_DISPLAY)) == EGL_NO_DISPLAY ) {
      
-      printf("eglGetDisplay failed!!!\n");
+      LOGE("eglGetDisplay failed!!!\n");
       free(h);
       return -1;
     }
     
-    printf("GOT AN EGL DISPLAY!\n");
+    LOGE("GOT AN EGL DISPLAY!\n");
     
     if( eglInitialize(h->dpy, &h->version_major, &h->version_minor) != EGL_TRUE ) {
      
-      printf("eglInitialize failed!!!\n");
+      LOGE("eglInitialize failed!!!\n");
       free(h);
       return -1;
     }
     
-    printf("EGL INITIALISED!\n");
+    LOGE("EGL INITIALISED!\n");
     
     *dpy = h;
     return 0;

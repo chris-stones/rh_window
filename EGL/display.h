@@ -5,6 +5,17 @@
 
 #include "../rh_window.h"
 
+#ifdef __ANDROID__
+	#include <android/log.h>
+	#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-activity", __VA_ARGS__))
+	#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "native-activity", __VA_ARGS__))
+	#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "native-activity", __VA_ARGS__))
+#else
+	#define LOGI(...) ((void)printf(__VA_ARGS__))
+	#define LOGW(...) ((void)printf(__VA_ARGS__))
+	#define LOGE(...) ((void)printf(__VA_ARGS__))
+#endif
+
 struct _rh_display {
 
   EGLDisplay dpy;

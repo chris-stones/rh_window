@@ -53,7 +53,7 @@ static int _rh_screen_create( rh_screen_handle * scr, int screen_index, rh_displ
       eglGetConfigAttrib(display->dpy,out->config,EGL_DEPTH_SIZE,&z);
       eglGetConfigAttrib(display->dpy,out->config,EGL_STENCIL_SIZE,&s);
 
-      printf("%d Configs found:\n\tFrame buffer(%d) RGBA(%d %d %d %d)\n\tZBuffer(%d) Z(%d) S(%d)\n\n",numConfigs,bufSize,r,g,b,a,z+s,z,s);
+      LOGE("%d Configs found:\n\tFrame buffer(%d) RGBA(%d %d %d %d)\n\tZBuffer(%d) Z(%d) S(%d)\n\n",numConfigs,bufSize,r,g,b,a,z+s,z,s);
     }
     
     eglGetConfigAttrib(display->dpy, out->config, EGL_NATIVE_VISUAL_ID, &out->format);

@@ -38,6 +38,7 @@ int rh_window_attr_create(rh_window_attr_t * attr) {
 int rh_window_attr_destroy(rh_window_attr_t attr) {
  
   free(attr);
+  return 0;
 }
 
 static int _get_attr_mask(const char * property) {
