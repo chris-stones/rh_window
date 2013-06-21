@@ -1,6 +1,12 @@
 
 #pragma once
 
+#ifdef __ANDROID__
+#ifndef RH_TARGET_OS_ANDROID
+#define RH_TARGET_OS_ANDROID 1
+#endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif 
@@ -110,8 +116,8 @@ int rh_display_destroy( rh_display_handle dpy );
 * Typically, you will crate only one per application.
 * You would only really need 2 screens if you had an ATI card, and a NVIDIA card, and wanted to use them both at the same time.
 */
-int rh_screen_create( rh_screen_handle * scr, int screen_index, rh_display_handle dpy, ... );
-int rh_screen_create_default( rh_screen_handle * scr, rh_display_handle dpy, ... );
+int rh_screen_create( rh_screen_handle * scr, int screen_index, rh_display_handle dpy );
+int rh_screen_create_default( rh_screen_handle * scr, rh_display_handle dpy );
 int rh_screen_destroy( rh_screen_handle scr );
 
 /***

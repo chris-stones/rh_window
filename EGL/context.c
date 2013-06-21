@@ -21,6 +21,8 @@ int rh_render_create( rh_render_handle * render, rh_window_handle window, int ma
     rh_bind_render_window(out,window);
     
     *render = out;
+
+    return 0;
   }
   
   return -1;
@@ -31,9 +33,12 @@ int rh_bind_render_window(rh_render_handle render, rh_window_handle window) {
   EGLSurface drawable = window ? window->surface : EGL_NO_SURFACE;
   EGLContext context  = window ? render->egl_ctx : EGL_NO_CONTEXT; // if window is null, bind a null render ctx.
   
-  eglMakeCurrent(render->screen->display->dpy, drawable, drawable, context);
+  if(render) {
+	  eglMakeCurrent(render->screen->display->dpy, drawable, drawable, context);
   
-  return 0;
+	  return 0;
+  }
+  return -1;
 }
 
 int rh_render_destroy( rh_render_handle render) {
@@ -45,6 +50,10 @@ int rh_render_destroy( rh_render_handle render) {
    eglDestroyContext(render->screen->display->dpy, render->egl_ctx);
     
    free(render);
+
+   return 0;
   }
+
+  return -1;
 }
 

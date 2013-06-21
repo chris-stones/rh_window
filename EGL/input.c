@@ -2,8 +2,8 @@
 #include "input.h"
 
 
-static const int input_buffer_length = 64;
-static struct _rh_input_data input_buffer[input_buffer_length] = {0, };
+static struct _rh_input_data input_buffer[64] = {0, };
+static const int input_buffer_length = sizeof(input_buffer) / sizeof(input_buffer[0]);
 static int input_buffer_read = 0;
 static int input_buffer_write = 0;
 
@@ -51,6 +51,7 @@ int rh_input_create( rh_input_handle *input, rh_window_handle wnd ) {
 int rh_input_destroy( rh_input_handle input ) {
   
   free( input );
+  return 0;
 }
 
 rh_input_data rh_input_get( rh_input_handle input ) {
