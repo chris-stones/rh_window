@@ -8,9 +8,9 @@
 
 static const struct _rh_window_attr _default_attr = 
 { 
-  0, 0, 
-  800, 600,
-  0
+  0, 0, // x,y
+  0, 0, // w,h
+  _RH_WINDOW_FULLSCREEN	// flags
 };
 
 static void _set_attr( rh_window_handle h, const struct _rh_window_attr * attr ) {
@@ -113,6 +113,9 @@ int rh_window_create( rh_window_handle * wnd, rh_window_attr_t attr, rh_screen_h
       screen->config, 
       screen->display->nativewindow,
       NULL);
+    
+    eglQuerySurface(screen->display->dpy, out->surface, EGL_WIDTH,  &out->attr.w );
+    eglQuerySurface(screen->display->dpy, out->surface, EGL_HEIGHT, &out->attr.w);
     
     *wnd = out;
     

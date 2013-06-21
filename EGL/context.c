@@ -12,7 +12,7 @@ int rh_render_create( rh_render_handle * render, rh_window_handle window, int ma
   
   if(( out = calloc(1, sizeof(struct _rh_render)) )) {
     
-    const EGLint attrib_list[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+    const EGLint attrib_list[] = {EGL_CONTEXT_CLIENT_VERSION, major_version, EGL_NONE };
     
     out->screen = window->screen;
     
