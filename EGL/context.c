@@ -5,6 +5,7 @@
 #include "window.h"
 
 #include<stdlib.h>
+#include<GLES2/gl2.h>
 
 int rh_render_create( rh_render_handle * render, rh_window_handle window, int major_version, int minor_version, rh_render_handle share ) {
   
@@ -34,9 +35,13 @@ int rh_bind_render_window(rh_render_handle render, rh_window_handle window) {
   EGLContext context  = window ? render->egl_ctx : EGL_NO_CONTEXT; // if window is null, bind a null render ctx.
   
   if(render) {
-	  eglMakeCurrent(render->screen->display->dpy, drawable, drawable, context);
+    
+    eglMakeCurrent(render->screen->display->dpy, drawable, drawable, context);
+
+//    if(window)
+//      glViewport(0,0,window->attr.w,window->attr.h);
   
-	  return 0;
+    return 0;
   }
   return -1;
 }

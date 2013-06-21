@@ -414,5 +414,19 @@ int rh_window_swapbuffers( rh_window_handle wnd ) {
   return 0;
 }
 
+int rh_window_getsize( rh_window_handle wnd, int * w, int * h) {
+
+  if(!wnd)
+    return -1;
+  
+  if(w)
+    *w = wnd->attr.w;
+  
+  if(h)
+    *h = wnd->attr.h;
+  
+  return 0;
+}
+
 
 

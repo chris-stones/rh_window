@@ -137,6 +137,7 @@ int rh_window_attr_geti(const rh_window_attr_t attr, const char * property, int 
 */
 int rh_window_create( rh_window_handle * wnd, rh_window_attr_t attr, rh_screen_handle scr );
 int rh_window_destroy( rh_window_handle wnd );
+int rh_window_getsize( rh_window_handle wnd, int * w, int * h);
 int rh_window_swapbuffers( rh_window_handle wnd );
 
 /***
