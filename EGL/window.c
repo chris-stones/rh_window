@@ -147,6 +147,10 @@ int rh_window_getsize( rh_window_handle wnd, int * w, int * h) {
   if(!wnd)
     return -1;
   
+  // re-read window size... device may have been rotated.
+  eglQuerySurface(wnd->screen->display->dpy, wnd->surface, EGL_WIDTH,  &wnd->attr.w);
+  eglQuerySurface(wnd->screen->display->dpy, wnd->surface, EGL_HEIGHT, &wnd->attr.h);
+
   if(w)
     *w = wnd->attr.w;
   

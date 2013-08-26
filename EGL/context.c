@@ -31,8 +31,8 @@ int rh_render_create( rh_render_handle * render, rh_window_handle window, int ma
 
 int rh_bind_render_window(rh_render_handle render, rh_window_handle window) {
   
-  EGLSurface drawable = window ? window->surface : EGL_NO_SURFACE;
-  EGLContext context  = window ? render->egl_ctx : EGL_NO_CONTEXT; // if window is null, bind a null render ctx.
+  EGLSurface drawable = (window)           ? window->surface : EGL_NO_SURFACE;
+  EGLContext context  = (window && render) ? render->egl_ctx : EGL_NO_CONTEXT; // if window is null, bind a null render ctx.
   
   if(render) {
     
