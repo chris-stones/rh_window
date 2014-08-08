@@ -45,6 +45,7 @@ int rh_screen_create( rh_screen_handle * scr, int screen_index, rh_display_handl
     if(out->glxFBConfig) XFree( out->glxFBConfig );
     if(out->xVisualInfo) XFree( out->xVisualInfo );
     if(out->screenConfig) XRRFreeScreenConfigInfo(out->screenConfig);
+    if(out->res) XFree(out->res);
     free(out);
   }
   
@@ -58,6 +59,7 @@ int rh_screen_destroy( rh_screen_handle scr ) {
     if(scr->glxFBConfig) XFree( scr->glxFBConfig );
     if(scr->xVisualInfo) XFree( scr->xVisualInfo );
     if(scr->screenConfig) XRRFreeScreenConfigInfo(scr->screenConfig);
+    if(scr->res) XFree(scr->res);
     free(scr);
   }
 }
